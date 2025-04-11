@@ -5,14 +5,14 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "2-a-new-faeture" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "2-a-new-faeture" ]
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted, ubuntu
 
     strategy:
       matrix:
@@ -31,7 +31,7 @@ jobs:
     - run: npm test
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted, ubuntu
     environment: production
     steps:
     - uses: actions/checkout@v4
