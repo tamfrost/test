@@ -12,6 +12,23 @@ on:
 jobs:
 
 
+  docker-dind-test:
+    runs-on: [self-hosted, ubuntu]
+    container:
+      image: docker:20.10.16
+    services:
+      docker:
+        image: docker:20.10.16-dind
+        options: --privileged
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: show info
+        shell: bash
+        run: |
+          docker info
+
+
   docker-test:
     runs-on: [self-hosted, ubuntu]
     container:
