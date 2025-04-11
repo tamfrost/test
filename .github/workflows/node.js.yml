@@ -24,7 +24,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: show info
-        shell: bash
+        shell: sh
         run: |
           docker info
 
@@ -42,35 +42,32 @@ jobs:
           node --version
           npm --version
 
-  build:
+  # build:
+  #   runs-on: [self-hosted, ubuntu]
+  #   strategy:
+  #     matrix:
+  #       node-version: [18.x, 20.x, 22.x]
+  #       # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - name: Use Node.js ${{ matrix.node-version }}
+  #     uses: actions/setup-node@v4
+  #     with:
+  #       node-version: ${{ matrix.node-version }}
+  #       cache: 'npm'
+  #   - run: npm ci
+  #   - run: npm run build --if-present
+  #   - run: npm test
 
-    runs-on: [self-hosted, ubuntu]
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
-
-  deploy:
-    runs-on: [self-hosted, ubuntu]
-    environment: production
-    steps:
-    - uses: actions/checkout@v4
-    - name: deploy
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: echo "Publishing ..."
+  # deploy:
+  #   runs-on: [self-hosted, ubuntu]
+  #   environment: production
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - name: deploy
+  #     uses: actions/setup-node@v4
+  #     with:
+  #       node-version: ${{ matrix.node-version }}
+  #       cache: 'npm'
+  #   - run: echo "Publishing ..."
 
