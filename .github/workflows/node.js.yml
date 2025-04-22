@@ -43,4 +43,4 @@ jobs:
         cache: 'npm'
     - run: echo "Publishing ..."
     - run: echo ${{ secrets.NPMRC }} | base64 --decode > ~/.npmrc
-    - run: cat ~/.npmrc
+    - run: npm publish
