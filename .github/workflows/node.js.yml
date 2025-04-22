@@ -4,43 +4,67 @@
 name: Node.js CI
 
 on:
-  workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "2-a-new-feature" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "2-a-new-feature" ]
 
 jobs:
+
+  docker-dind-test:
+    runs-on: [self-hosted, ubuntu]
+    container:
+      image: docker:20.10.16
+    services:
+      docker:
+        image: docker:20.10.16-dind
+        options: --privileged
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: show info
+        shell: sh
+        run: |
+          docker info
+
+
+  docker-test:
+    runs-on: [self-hosted, ubuntu]
+    container:
+      image: node:22.13.0
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: show versions
+        shell: bash
+        run: |
+          node --version
+          npm --version
+
   build:
-
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    runs-on: [self-hosted, ubuntu]
+    container:
+      image: node:22.13.0
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: build and test
+        shell: bash
+        run: |
+             npm ci
+             npm run build --if-present
+             npm test
 
-  deploy:
-    runs-on: ubuntu-latest
+  publish:
+    runs-on: [self-hosted, ubuntu]
     environment: production
+    container:
+      image: node:22.13.0
     steps:
-    - uses: actions/checkout@v4
-    - name: deploy
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: echo "Publishing ..."
-    - run: echo ${{ secrets.NPMRC }} | base64 --decode > ~/.npmrc
-    - run: npm publish
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: publish
+        shell: bash
+        run: |
+             echo ${{ secrets.NPMRC }} | base64 --decode > ~/.npmrc
+             npm publish
