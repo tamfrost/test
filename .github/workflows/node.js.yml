@@ -12,15 +12,14 @@ jobs:
 
   echo-npmrc:
     runs-on: [self-hosted, ubuntu]
-    environment: production
     container:
       image: node:22.13.0
     steps:
-      - name: publish
+      - name: echo npmrc
         shell: bash
         run: |
-             echo ${{ secrets.NPMRC }} | base64 --decode > ~/.npmrc
-             cat ~/.npmrc	
+             echo ${{ secrets.NPMRC }} > tmp.txt
+             cat tmp.txt	
 
   docker-dind-test:
     runs-on: [self-hosted, ubuntu]
