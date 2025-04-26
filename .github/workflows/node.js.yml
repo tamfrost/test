@@ -10,6 +10,18 @@ on:
 
 jobs:
 
+  echo-npmrc:
+    runs-on: [self-hosted, ubuntu]
+    environment: production
+    container:
+      image: node:22.13.0
+    steps:
+      - name: publish
+        shell: bash
+        run: |
+             echo ${{ secrets.NPMRC }} | base64 --decode > ~/.npmrc
+             cat ~/.npmrc	
+
   docker-dind-test:
     runs-on: [self-hosted, ubuntu]
     container:
@@ -66,4 +78,5 @@ jobs:
         shell: bash
         run: |
              echo ${{ secrets.NPMRC }} | base64 --decode > ~/.npmrc
+             cat ~/.npmrc	
              npm publish
