@@ -15,11 +15,17 @@ jobs:
     container:
       image: ubuntu:22.04
     steps:
+
       - uses: actions/checkout@v4
-      - name: echo npmrc
+      - name: test with checkout
         shell: sh
         run: |
-             git --version || echo "Git not installed"
+             pwd
+             ls -al
+
+      - name: test without checkout
+        shell: sh
+        run: |
              pwd
              ls -al
 
