@@ -16,13 +16,14 @@ jobs:
       image: ubuntu:22.04
     steps:
 
-      - uses: actions/checkout@v4
       - name: test with checkout
         shell: sh
         run: |
              pwd
              ls -al
+             rm -rf bin .gitignore package.json package-lock.json
 
+      - uses: actions/checkout@v4
       - name: test without checkout
         shell: sh
         run: |
