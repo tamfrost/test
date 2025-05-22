@@ -10,25 +10,35 @@ on:
 
 jobs:
 
-  test-checkout:
-    runs-on: [ubuntu-latest]
-    container:
-      image: ubuntu:22.04
+  build:
+    runs-on: ubuntu-latest
     steps:
-
-      - name: test with checkout
-        shell: sh
-        run: |
-             pwd
-             ls -al
-             rm -rf bin .gitignore package.json package-lock.json
-
       - uses: actions/checkout@v4
-      - name: test without checkout
-        shell: sh
-        run: |
-             pwd
-             ls -al
+
+      - uses: ./my-action
+        with:
+          who-to-greet: 'Alice'
+
+
+  # test-checkout:
+  #   runs-on: [ubuntu-latest]
+  #   container:
+  #     image: ubuntu:22.04
+  #   steps:
+
+  #     - name: test with checkout
+  #       shell: sh
+  #       run: |
+  #            pwd
+  #            ls -al
+  #            rm -rf bin .gitignore package.json package-lock.json
+
+  #     - uses: actions/checkout@v4
+  #     - name: test without checkout
+  #       shell: sh
+  #       run: |
+  #            pwd
+  #            ls -al
 
 
   # echo-npmrc:
