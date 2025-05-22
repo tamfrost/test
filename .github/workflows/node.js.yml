@@ -5,77 +5,90 @@ name: Node.js CI
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches: [ "release" ]
+  push:
+    branches: [ "main" ]
 
 jobs:
 
-  echo-npmrc:
+  check-for-git:
     runs-on: [self-hosted, ubuntu]
     container:
-      image: node:22.13.0
+      image: alpine
     steps:
+      - uses: actions/checkout@v4
       - name: echo npmrc
         shell: bash
         run: |
-             echo ${{ secrets.NPMRC }} > tmp.txt
-             cat tmp.txt	
-
-  docker-dind-test:
-    runs-on: [self-hosted, ubuntu]
-    container:
-      image: docker:20.10.16
-    services:
-      docker:
-        image: docker:20.10.16-dind
-        options: --privileged
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: show info
-        shell: sh
-        run: |
-          docker info
+             git --version || echo "Git not installed"
+             ls -al /github/workspace
 
 
-  docker-test:
-    runs-on: [self-hosted, ubuntu]
-    container:
-      image: node:22.13.0
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v4
-      - name: show versions
-        shell: bash
-        run: |
-          node --version
-          npm --version
+  # echo-npmrc:
+  #   runs-on: [self-hosted, ubuntu]
+  #   container:
+  #     image: node:22.13.0
+  #   steps:
+  #     - name: echo npmrc
+  #       shell: bash
+  #       run: |
+  #            echo ${{ secrets.NPMRC }} > tmp.txt
+  #            cat tmp.txt	
 
-  build:
-    runs-on: [self-hosted, ubuntu]
-    container:
-      image: node:22.13.0
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v4
-      - name: build and test
-        shell: bash
-        run: |
-             npm ci
-             npm run build --if-present
-             npm test
+  # docker-dind-test:
+  #   runs-on: [self-hosted, ubuntu]
+  #   container:
+  #     image: docker:20.10.16
+  #   services:
+  #     docker:
+  #       image: docker:20.10.16-dind
+  #       options: --privileged
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #     - name: show info
+  #       shell: sh
+  #       run: |
+  #         docker info
 
-  publish:
-    runs-on: [self-hosted, ubuntu]
-    environment: production
-    container:
-      image: node:22.13.0
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v4
-      - name: publish
-        shell: bash
-        run: |
-             echo ${{ secrets.NPMRC }} | base64 --decode > ~/.npmrc
-             cat ~/.npmrc	
-             npm publish
+
+  # docker-test:
+  #   runs-on: [self-hosted, ubuntu]
+  #   container:
+  #     image: node:22.13.0
+  #   steps:
+  #     - name: checkout code
+  #       uses: actions/checkout@v4
+  #     - name: show versions
+  #       shell: bash
+  #       run: |
+  #         node --version
+  #         npm --version
+
+  # build:
+  #   runs-on: [self-hosted, ubuntu]
+  #   container:
+  #     image: node:22.13.0
+  #   steps:
+  #     - name: checkout code
+  #       uses: actions/checkout@v4
+  #     - name: build and test
+  #       shell: bash
+  #       run: |
+  #            npm ci
+  #            npm run build --if-present
+  #            npm test
+
+  # publish:
+  #   runs-on: [self-hosted, ubuntu]
+  #   environment: production
+  #   container:
+  #     image: node:22.13.0
+  #   steps:
+  #     - name: checkout code
+  #       uses: actions/checkout@v4
+  #     - name: publish
+  #       shell: bash
+  #       run: |
+  #            echo ${{ secrets.NPMRC }} | base64 --decode > ~/.npmrc
+  #            cat ~/.npmrc	
+  #            npm publish

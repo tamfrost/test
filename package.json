@@ -1,5 +1,5 @@
 {
-  "name": "@fra/test",
+  "name": "@tamfrost/test",
   "version": "1.0.4",
   "main": "index.js",
   "bin": {
