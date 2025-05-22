@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: .github/workflows/my-action
+      - uses: ./.github/workflows/my-action
         with:
           who-to-greet: 'Alice'
 
