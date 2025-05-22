@@ -10,7 +10,7 @@ on:
 
 jobs:
 
-  check-for-git:
+  test-checkout:
     runs-on: [ubuntu-latest]
     container:
       image: alpine
@@ -20,16 +20,6 @@ jobs:
         shell: sh
         run: |
              git --version || echo "Git not installed"
-
-  ls-workspace:
-    runs-on: [ubuntu-latest]
-    container:
-      image: alpine
-    steps:
-      - uses: actions/checkout@v4
-      - name: echo npmrc
-        shell: sh
-        run: |
              ls -al /github/workspace
 
 
