@@ -20,7 +20,8 @@ jobs:
         shell: sh
         run: |
              git --version || echo "Git not installed"
-             ls -al /github/workspace
+             pwd
+             ls -al
 
 
   # echo-npmrc:
