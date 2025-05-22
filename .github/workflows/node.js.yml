@@ -11,7 +11,18 @@ on:
 jobs:
 
   check-for-git:
-    runs-on: [self-hosted, ubuntu]
+    runs-on: [ubuntu-latest]
+    container:
+      image: alpine
+    steps:
+      - uses: actions/checkout@v4
+      - name: echo npmrc
+        shell: sh
+        run: |
+             git --version || echo "Git not installed"
+
+  ls-workspace:
+    runs-on: [ubuntu-latest]
     container:
       image: alpine
     steps:
@@ -20,7 +31,6 @@ jobs:
         shell: sh
         run: |
              ls -al /github/workspace
-             git --version || echo "Git not installed"
 
 
   # echo-npmrc:
