@@ -11,11 +11,11 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ./.github/actions/emsdk
+      - uses: .github/actions/emsdk
         with:
           cppfile: helloworld
 
@@ -25,14 +25,14 @@ jobs:
           pwd
           ls -al
 
-      - uses: ./.github/actions/my-docker-action
+      - uses: .github/actions/my-docker-action
         with:
           script: script.js
         env:
           MY_ENV_VAR: 'Hello World'
           MY_ENV_VAR2: 'Hello World2'
 
-      - uses: ./.github/actions/my-action
+      - uses: .github/actions/my-action
         with:
           who-to-greet: 'Alice'
 
