@@ -10,4 +10,7 @@ runs:
   using: 'docker'
   image: 'emscripten/emsdk'
   args:
-    - emcc ${{ inputs.cppfile }}.cpp -o ${{ inputs.cppfile }}.js
+    - emcc
+    - ${{ inputs.cppfile }}.cpp
+    - -o
+    - ${{ inputs.cppfile }}.js
