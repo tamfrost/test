@@ -10,31 +10,41 @@ on:
 
 jobs:
 
-  build:
-    runs-on: self-hosted
+  build-documentation:
+    runs-on: ['self-hosted','ubuntu']
+    env:
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/emsdk
+      - uses: ./.github/actions/pandoc
         with:
-          cppfile: helloworld
+          function: build_documentation
 
-      - name: list files
-        shell: sh
-        run: |
-          pwd
-          ls -al
 
-      - uses: ./.github/actions/my-docker-action
-        with:
-          script: script.js
-        env:
-          MY_ENV_VAR: 'Hello World'
-          MY_ENV_VAR2: 'Hello World2'
+  # build:
+  #   runs-on: self-hosted
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: ./.github/actions/my-action
-        with:
-          who-to-greet: 'Alice'
+  #     - uses: ./.github/actions/emsdk
+  #       with:
+  #         cppfile: helloworld
+
+  #     - name: list files
+  #       shell: sh
+  #       run: |
+  #         pwd
+  #         ls -al
+
+  #     - uses: ./.github/actions/my-docker-action
+  #       with:
+  #         script: script.js
+  #       env:
+  #         MY_ENV_VAR: 'Hello World'
+  #         MY_ENV_VAR2: 'Hello World2'
+
+  #     - uses: ./.github/actions/my-action
+  #       with:
+  #         who-to-greet: 'Alice'
 
 
   # test-checkout:
