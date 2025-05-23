@@ -25,6 +25,7 @@ build_wasm() {
 
      cd wasm
     /bin/bash build_cicd.sh
+    ls -al ../lib
     ## TODO: code below using cmake is not working for some reason
     # cd wasm
     # mkdir build
@@ -34,4 +35,29 @@ build_wasm() {
     # cd ..
     # rm -rf build
 }
+
+build_package() {
+# written for node:18.17.1
+    PS4=$(printf "\n\033[1;33mPACKAGE >>\033[0m ")
+    set -x
+    prepare_npmrc_gitlab_instance
+
+    echo {\"commitHash\": \"${CI_COMMIT_SHORT_SHA}\", \"time\": \"$(date)\"} > buildinfo.json 
+
+    npm install
+    npm run build
+
+    mkdir package
+    npm pack --pack-destination="./package"
+    node .scripts/getPackageInfo.js name > package/name.txt
+    node .scripts/getPackageInfo.js version > package/version.txt
+    node .scripts/getPackageInfo.js namespace > package/namespace.txt
+
+    # cp -r doc publish/.
+    cp dist/iqplayer.min.js publish/.
+    cp dist/player-worker.min.js publish/.
+    cd publish
+    npm pack
+}
+
 

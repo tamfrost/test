@@ -19,10 +19,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build documentation
-        uses: ./.github/actions/asciidoctor
-        with:
-          function: build_documentation
+      # - name: Build documentation
+      #   uses: ./.github/actions/asciidoctor
+      #   with:
+      #     function: build_documentation
 
       - name: Build wasm
         uses: ./.github/actions/wasm

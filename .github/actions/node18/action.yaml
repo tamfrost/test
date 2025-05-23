@@ -1,5 +1,5 @@
-name: 'Wasm'
-description: 'Build web assembly'
+name: 'node18'
+description: 'For running npm and node'
 
 inputs:
   function:
@@ -8,7 +8,7 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'tamfrost/emsdk:4.0.6-utils-1'
+  image: 'node:18'
   entrypoint: /bin/bash
   args:
     - -c
