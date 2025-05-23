@@ -15,6 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: ./.github/actions/emsdk
+        with:
+          cppfile: helloworld
+
+      - name: list files
+        shell: sh
+        run: |
+          pwd
+          ls -al
+
       - uses: ./.github/actions/my-docker-action
         with:
           script: script.js
