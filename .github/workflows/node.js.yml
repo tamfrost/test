@@ -19,8 +19,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: list files
+        shell: sh
+        run: |
+          pwd
+          ls -al .scripts/cicd
+
       - name: Build documentation
-        uses: ./.github/actions/pandoc
+        uses: ./.github/actions/asciidoctor
         with:
           function: build_documentation
 

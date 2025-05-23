@@ -1,5 +1,5 @@
-name: 'Pandoc latex'
-description: 'Build dockumentation with pandoc'
+name: 'Asciidoctor'
+description: 'Build dockumentation with asciidoctor'
 
 inputs:
   function:
@@ -8,10 +8,10 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'pandoc/latex'
-  entrypoint: /bin/sh
+  image: 'asciidoctor/docker-asciidoctor'
+  entrypoint: /bin/bash
   args:
     - -c
     - |
-      .scripts/cicd/jobs.sh
+      source .scripts/cicd/jobs.sh
       ${{ inputs.function }}
