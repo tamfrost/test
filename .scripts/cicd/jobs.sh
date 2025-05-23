@@ -23,6 +23,9 @@ build_wasm() {
     PS4=$(printf "\n\033[1;33mWASM >>\033[0m ")
     set -x
 
+    echo $VARIABLE1
+    echo $CI_COMMIT_SHORT_SHA
+
      cd wasm
     /bin/bash build_cicd.sh
     ls -al ../lib
