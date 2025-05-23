@@ -19,16 +19,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: list files
-        shell: sh
-        run: |
-          pwd
-          ls -al .scripts/cicd
-
       - name: Build documentation
         uses: ./.github/actions/asciidoctor
         with:
           function: build_documentation
+
+      - name: Build wasm
+        uses: ./.github/actions/wasm
+        with:
+          function: build_wasm
 
 
   # build:
