@@ -17,3 +17,21 @@ build_documentation() {
     # #genarate ms-word
     # docker run -v $(pwd)/doc:/data $IMAGE_REGISTRY_PATH_MAIN/pandoc/latex -r docbook -t docx -o documentation.docx documentation.xml
 }
+
+build_wasm() {
+# written for dspdf-wasm
+    PS4=$(printf "\n\033[1;33mWASM >>\033[0m ")
+    set -x
+
+     cd wasm
+    /bin/bash build_cicd.sh
+    ## TODO: code below using cmake is not working for some reason
+    # cd wasm
+    # mkdir build
+    # cd build
+    # cmake -DCMAKE_TOOLCHAIN_FILE="/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake" -DBUILD_TYPE=wasm -DCOMMIT_HASH=${CI_COMMIT_SHORT_SHA} .. || exit 1
+    # make || exit 1
+    # cd ..
+    # rm -rf build
+}
+
