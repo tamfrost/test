@@ -10,9 +10,8 @@ outputs:
     description: 'The time we greeted you'
 runs:
   using: 'docker'
-  image: 'node:20'
-  args:
-    - .github/actions/my-action/index.js
+  image: 'Dockerfile'
+  args: []
 branding:
   icon: 'terminal'
   color: 'blue'
