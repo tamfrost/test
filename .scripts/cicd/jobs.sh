@@ -62,9 +62,6 @@ publish_package() {
     set -x
 
     echo -e ${NPMRC} | base64 -d > .npmrc
-
-    # cp publish/*.tgz ./dist-package.tgz
-    cat .npmrc
     npm publish
 }
 

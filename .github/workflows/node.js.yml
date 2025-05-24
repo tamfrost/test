@@ -59,6 +59,9 @@ jobs:
           CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
           NPMRC: ${{ secrets.NPMRC }}
 
+      - name: Fix permissions
+        run: sudo chown -R johan:johan .
+
 
       # - uses: ./.github/actions/my-action
       #   with:
