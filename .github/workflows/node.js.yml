@@ -60,13 +60,13 @@ jobs:
           CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
           NPMRC: ${{ secrets.NPMRC }}
 
-      - name: Fix permissions
-        if: always()
-        run: |
-            whoami
-            id
-            sudo -l
-            sudo -n chown -R $(whoami):$(whoami) .
+      # - name: Fix permissions
+      #   if: always()
+      #   run: |
+      #       whoami
+      #       id
+      #       sudo -l
+      #       sudo -n chown -R $(whoami):$(whoami) .
 
 
       # - uses: ./.github/actions/my-action
