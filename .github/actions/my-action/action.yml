@@ -11,8 +11,8 @@ outputs:
 runs:
   using: 'docker'
   image: 'node:20'
-  args: 
-    - index.js
+  args:
+    - .github/actions/my-action/index.js
 branding:
   icon: 'terminal'
   color: 'blue'
