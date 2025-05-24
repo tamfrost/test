@@ -43,13 +43,18 @@ jobs:
       #     CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
       #     VARIABLE1: ${{ vars.VARIABLE1 }}
 
-      - name: Build package
-        uses: ./.github/actions/node18
+      # - name: Build package
+      #   uses: ./.github/actions/node18
+      #   with:
+      #     function: build_package
+      #   env:
+      #     CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+      #     NPMRC: ${{ secrets.NPMRC }}
+
+      - uses: ./.github/actions/my-action
         with:
-          function: build_package
-        env:
-          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
-          NPMRC: ${{ secrets.NPMRC }}
+          who-to-greet: 'Alice'
+
 
 
   # build:
@@ -74,9 +79,6 @@ jobs:
   #         MY_ENV_VAR: 'Hello World'
   #         MY_ENV_VAR2: 'Hello World2'
 
-  #     - uses: ./.github/actions/my-action
-  #       with:
-  #         who-to-greet: 'Alice'
 
 
   # test-checkout:

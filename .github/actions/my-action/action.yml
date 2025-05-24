@@ -9,5 +9,10 @@ outputs:
   time:
     description: 'The time we greeted you'
 runs:
-  using: 'node16'
-  main: 'index.js'
+  using: 'docker'
+  image: 'node:20'
+  args: 
+    - index.js
+branding:
+  icon: 'terminal'
+  color: 'blue'
