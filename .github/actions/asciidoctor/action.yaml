@@ -10,9 +10,6 @@ runs:
   using: 'docker'
   image: 'asciidoctor/docker-asciidoctor'
   entrypoint: /bin/bash
-  env:
-    CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
-    VARIABLE1: ${{ vars.VARIABLE1 }}
   args:
     - -c
     - |

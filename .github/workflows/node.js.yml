@@ -28,6 +28,9 @@ jobs:
         uses: ./.github/actions/asciidoctor
         with:
           function: build_documentation
+        env:
+          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+          VARIABLE1: ${{ vars.VARIABLE1 }}
 
       - name: Build wasm
         uses: ./.github/actions/wasm
@@ -36,6 +39,14 @@ jobs:
         env:
           CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
           VARIABLE1: ${{ vars.VARIABLE1 }}
+
+      - name: Build package
+        uses: ./.github/actions/node18
+        with:
+          function: build_package
+        env:
+          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+          NPMRC: ${{ secrets.NPMRC }}
 
 
   # build:

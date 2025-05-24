@@ -43,24 +43,13 @@ build_package() {
 # written for node:18.17.1
     PS4=$(printf "\n\033[1;33mPACKAGE >>\033[0m ")
     set -x
-    prepare_npmrc_gitlab_instance
+
+    echo "Building package for ${CI_COMMIT_SHORT_SHA}"
+    echo ${NPMRC}" | base64 -d
 
     echo {\"commitHash\": \"${CI_COMMIT_SHORT_SHA}\", \"time\": \"$(date)\"} > buildinfo.json 
 
     npm install
-    npm run build
-
-    mkdir package
-    npm pack --pack-destination="./package"
-    node .scripts/getPackageInfo.js name > package/name.txt
-    node .scripts/getPackageInfo.js version > package/version.txt
-    node .scripts/getPackageInfo.js namespace > package/namespace.txt
-
-    # cp -r doc publish/.
-    cp dist/iqplayer.min.js publish/.
-    cp dist/player-worker.min.js publish/.
-    cd publish
-    npm pack
 }
 
 
