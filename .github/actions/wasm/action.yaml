@@ -10,6 +10,9 @@ runs:
   using: 'docker'
   image: 'tamfrost/emsdk:4.0.6-utils-1'
   entrypoint: /bin/bash
+  env:
+    CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+    VARIABLE1: ${{ vars.VARIABLE1 }}
   args:
     - -c
     - |
