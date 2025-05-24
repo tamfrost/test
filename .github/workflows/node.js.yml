@@ -52,6 +52,7 @@ jobs:
       #     NPMRC: ${{ secrets.NPMRC }}
 
       - name: Publish package
+        continue-on-error: true
         uses: ./.github/actions/node18
         with:
           function: publish_package
@@ -60,7 +61,10 @@ jobs:
           NPMRC: ${{ secrets.NPMRC }}
 
       - name: Fix permissions
-        run: sudo chown -R johan:johan .
+        if: always()
+        run: |
+            whoami
+            sudo chown -R $USER:$USER .
 
 
       # - uses: ./.github/actions/my-action
