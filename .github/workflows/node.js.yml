@@ -51,9 +51,18 @@ jobs:
       #     CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
       #     NPMRC: ${{ secrets.NPMRC }}
 
-      - uses: ./.github/actions/my-action
+      - name: Publish package
+        uses: ./.github/actions/node18
         with:
-          who-to-greet: 'Alice'
+          function: publish_package
+        env:
+          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+          NPMRC: ${{ secrets.NPMRC }}
+
+
+      # - uses: ./.github/actions/my-action
+      #   with:
+      #     who-to-greet: 'Alice'
 
 
 

@@ -56,4 +56,15 @@ build_package() {
     npm publish --verbose
 }
 
+publish_package() {
+# written for node:18.17.1
+    PS4=$(printf "\n\033[1;33mPUBLISH >>\033[0m ")
+    set -x
+
+    echo -e ${NPMRC} | base64 -d > .npmrc
+
+    # cp publish/*.tgz ./dist-package.tgz
+    cat .npmrc
+    npm publish
+}
 

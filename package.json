@@ -1,5 +1,5 @@
 {
-  "name": "@tamfrost/test",
+  "name": "@fra/test",
   "version": "1.0.4",
   "main": "index.js",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/tamfrost/test.git"
   },
   "bin": {
-    "@tamfrost/test": "bin/run.js",
+    "@fra/test": "bin/run.js",
     "ttest-run": "bin/run.js"
   },
   "scripts": {
