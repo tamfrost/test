@@ -45,7 +45,8 @@ build_package() {
     set -x
 
     echo "Building package for ${CI_COMMIT_SHORT_SHA}"
-    echo "${NPMRC}" | base64 -d
+    echo "${NPMRC}" | base64 -d > .npmrc
+    cat .npmrc
 
     echo {\"commitHash\": \"${CI_COMMIT_SHORT_SHA}\", \"time\": \"$(date)\"} > buildinfo.json 
 
