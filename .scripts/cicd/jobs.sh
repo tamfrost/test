@@ -51,6 +51,9 @@ build_package() {
     echo {\"commitHash\": \"${CI_COMMIT_SHORT_SHA}\", \"time\": \"$(date)\"} > buildinfo.json 
 
     npm install
+    npm run build
+    npm pack
+    npm publish --verbose
 }
 
 
