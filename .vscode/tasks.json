@@ -1,0 +1,12 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "GitHub - delete all worflows",
+            "type": "shell",
+            "command": "for /f %i in ('gh api repos/tamfrost/test/actions/runs --jq \".workflow_runs[].id\"') do gh api -X DELETE repos/tamfrost/test/actions/runs/%i"
+        }
+    ]
+}
