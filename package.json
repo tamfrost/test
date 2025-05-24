@@ -2,6 +2,10 @@
   "name": "@tamfrost/test",
   "version": "1.0.4",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tamfrost/test.git"
+  },
   "bin": {
     "@tamfrost/test": "bin/run.js",
     "ttest-run": "bin/run.js"
