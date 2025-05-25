@@ -59,6 +59,7 @@ build_package() {
     set -x
 
     cat .npmrc
+    cp .npmrc ~/.npmrc
 
     echo "Building package for ${CI_COMMIT_SHORT_SHA}"
 
@@ -75,6 +76,7 @@ publish_package() {
     set -x
 
     cat .npmrc
+    cp .npmrc ~/.npmrc
 
     npm publish
 }

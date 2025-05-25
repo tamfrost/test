@@ -1,6 +1,6 @@
 FROM node:18
 
-COPY .npmrc .
+# COPY .npmrc .
 
 RUN echo "Setting USER 1000"
 
