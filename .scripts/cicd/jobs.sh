@@ -7,6 +7,7 @@ prepare_npmrc() {
             pwd
             ./aws_login
         fi
+    fi
 }
 
 build_documentation() {
