@@ -58,11 +58,9 @@ build_package() {
     PS4=$(printf "\n\033[1;33mPACKAGE >>\033[0m ")
     set -x
 
-    prepare_npmrc
+    cat .npmrc
 
     echo "Building package for ${CI_COMMIT_SHORT_SHA}"
-    echo "${NPMRC}" | base64 -d > .npmrc
-    cat .npmrc
 
     echo {\"commitHash\": \"${CI_COMMIT_SHORT_SHA}\", \"time\": \"$(date)\"} > buildinfo.json 
 
@@ -76,9 +74,8 @@ publish_package() {
     PS4=$(printf "\n\033[1;33mPUBLISH >>\033[0m ")
     set -x
 
-    prepare_npmrc
+    cat .npmrc
 
-    echo -e ${NPMRC} | base64 -d > .npmrc
     npm publish
 }
 
