@@ -1,3 +1,14 @@
+prepare_npmrc() {
+    if [ -n "$NPMRC" ]; then
+        echo found NPMRC environment variable
+        echo -e ${NPMRC} | base64 -d > .npmrc
+        if command -v aws >/dev/null 2>&1; then
+            echo "aws cli detected, logging in to CodeArtifact"
+            pwd
+            ./aws_login
+        fi
+}
+
 build_documentation() {
     set -x
 
@@ -44,6 +55,8 @@ build_package() {
     PS4=$(printf "\n\033[1;33mPACKAGE >>\033[0m ")
     set -x
 
+    prepare_npmrc
+
     echo "Building package for ${CI_COMMIT_SHORT_SHA}"
     echo "${NPMRC}" | base64 -d > .npmrc
     cat .npmrc
@@ -60,6 +73,8 @@ publish_package() {
 # written for node:18.17.1
     PS4=$(printf "\n\033[1;33mPUBLISH >>\033[0m ")
     set -x
+
+    prepare_npmrc
 
     echo -e ${NPMRC} | base64 -d > .npmrc
     npm publish
