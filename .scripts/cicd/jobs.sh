@@ -69,7 +69,6 @@ build_package() {
     npm install
     npm run build
     npm pack
-    npm publish --verbose
 }
 
 publish_package() {

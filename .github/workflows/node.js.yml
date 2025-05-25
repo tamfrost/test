@@ -30,10 +30,7 @@ jobs:
       - name: Prepare .nmprc
         run: |
           echo -e ${{ secrets.NPMRC }} | base64 -d > ~/.npmrc
-          [ -f /aws_login ] && /aws_login || echo "aws_login not found, skipping copy"
-          cat ~/.npmrc
-          cp ~/.npmrc ./
-          cp ~/.npmrc ./.github/actions/node18/
+          [ -f /aws_login ] && /aws_login && cp ~/.npmrc ./.github/actions/node18/ || echo "aws_login not found, skipping copy"
 
       - name: Build documentation
         uses: ./.github/actions/asciidoctor
@@ -57,7 +54,7 @@ jobs:
           function: build_package
         env:
           CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
-          NPMRC: ${{ secrets.NPMRC }}
+          # NPMRC: ${{ secrets.NPMRC }}
 
       - name: Publish package
         continue-on-error: true
@@ -66,7 +63,7 @@ jobs:
           function: publish_package
         env:
           CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
-          NPMRC: ${{ secrets.NPMRC }}
+          # NPMRC: ${{ secrets.NPMRC }}
 
       # - name: Fix permissions
       #   if: always()
