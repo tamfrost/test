@@ -72,7 +72,7 @@ jobs:
             id
             sudo -l
             ls -al ../../.
-            echo "p" | sudo -u cleaner -S chown -R $(whoami):$(whoami) ../../.
+            echo "p" | sudo -S chown -R $(whoami):$(whoami) ../../.
 
 
       # - uses: ./.github/actions/my-action
