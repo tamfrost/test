@@ -26,7 +26,10 @@ jobs:
 
       - name: Copy aws_login into action context if it exists
         run: |
+          ls -al /aws_login
+          ls -al ./.github/actions/node18/
           [ -f /aws_login ] && cp /aws_login ./.github/actions/node18/ || echo "aws_login not found, skipping copy"
+          ls -al ./.github/actions/node18/
 
       - name: Checkout code
         uses: actions/checkout@v4
