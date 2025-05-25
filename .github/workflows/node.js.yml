@@ -67,12 +67,13 @@ jobs:
 
       - name: Fix permissions
         if: always()
-        run: |
-            whoami
-            id
-            sudo -l
-            ls -al ../../.
-            echo "p" | sudo -S chown -R $(whoami):$(whoami) ../../.
+        run: echo "${PPP}" | sudo -S chown -R $(whoami):$(whoami) ../../.
+        # run: |
+        #     whoami
+        #     id
+        #     sudo -l
+        #     ls -al ../../.
+        #     echo "p" | sudo -S chown -R $(whoami):$(whoami) ../../.
 
 
       # - uses: ./.github/actions/my-action
