@@ -30,10 +30,7 @@ jobs:
       - name: Prepare .npmrc
         run: |
           echo -e ${{ secrets.NPMRC }} | base64 -d > ~/.npmrc
-          [ -f /aws_login ] && /aws_login || echo "aws_login not found, skipping copy"
-          cat ~/.npmrc
-          cp ~/.npmrc ./
-          cp ~/.npmrc ./.github/actions/node18/
+          [ -f /aws_login ] && /aws_login && cp ~/.npmrc ./ && cp ~/.npmrc ./.github/actions/node18/ || echo "aws_login not found, skipping copy"
 
       - name: Build documentation
         uses: ./.github/actions/asciidoctor
