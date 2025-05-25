@@ -24,6 +24,10 @@ jobs:
           echo "CI_COMMIT_SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
           echo "APP_VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
 
+      - name: Copy aws_login into action context if it exists
+        run: |
+          [ -f /aws_login ] && cp /aws_login ./.github/actions/node18/ || echo "aws_login not found, skipping copy"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
