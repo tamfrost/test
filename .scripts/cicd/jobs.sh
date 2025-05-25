@@ -1,3 +1,7 @@
+test() {
+    whoami
+}
+
 prepare_npmrc() {
     cat .npmrc
     cp .npmrc ~/.npmrc

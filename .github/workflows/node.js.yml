@@ -11,7 +11,7 @@ on:
 jobs:
 
   build-documentation:
-    runs-on: ['self-hosted','ubuntu','runner1']
+    runs-on: ['self-hosted','ubuntu']
     env:
       NODE_EXTRA_CA_CERTS: /etc/ssl/certs/ca-certificates.crt
     permissions:
@@ -27,172 +27,57 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Prepare .npmrc
-        run: |
-          echo -e ${{ secrets.NPMRC }} | base64 -d > ~/.npmrc
-          [ -f /aws_login ] && /aws_login && cp ~/.npmrc ./ || echo "aws_login not found, skipping copy"
-
-      - name: Build documentation
-        uses: ./.github/actions/asciidoctor
-        with:
-          function: build_documentation
-        env:
-          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
-          VARIABLE1: ${{ vars.VARIABLE1 }}
-
-      - name: Build wasm
-        uses: ./.github/actions/wasm
-        with:
-          function: build_wasm
-        env:
-          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
-          VARIABLE1: ${{ vars.VARIABLE1 }}
-
-      - name: Build package
-        uses: ./.github/actions/node18
-        with:
-          function: build_package
-        env:
-          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
-          # NPMRC: ${{ secrets.NPMRC }}
-
-      - name: Publish package
+      - name: Test
         continue-on-error: true
         uses: ./.github/actions/node18
         with:
-          function: publish_package
+          function: test
         env:
           CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
-          # NPMRC: ${{ secrets.NPMRC }}
 
-      - name: Fix permissions
-        if: always()
-        run: echo "${PPP}" | sudo -S chown -R $(whoami):$(whoami) ../../.
-        # run: |
-        #     whoami
-        #     id
-        #     sudo -l
-        #     ls -al ../../.
-        #     echo "p" | sudo -S chown -R $(whoami):$(whoami) ../../.
+      # - name: Prepare .npmrc
+      #   run: |
+      #     echo -e ${{ secrets.NPMRC }} | base64 -d > ~/.npmrc
+      #     [ -f /aws_login ] && /aws_login && cp ~/.npmrc ./ || echo "aws_login not found, skipping copy"
 
-
-      # - uses: ./.github/actions/my-action
+      # - name: Build documentation
+      #   uses: ./.github/actions/asciidoctor
       #   with:
-      #     who-to-greet: 'Alice'
+      #     function: build_documentation
+      #   env:
+      #     CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+      #     VARIABLE1: ${{ vars.VARIABLE1 }}
+
+      # - name: Build wasm
+      #   uses: ./.github/actions/wasm
+      #   with:
+      #     function: build_wasm
+      #   env:
+      #     CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+      #     VARIABLE1: ${{ vars.VARIABLE1 }}
+
+      # - name: Build package
+      #   uses: ./.github/actions/node18
+      #   with:
+      #     function: build_package
+      #   env:
+      #     CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+      #     # NPMRC: ${{ secrets.NPMRC }}
+
+      # - name: Publish package
+      #   continue-on-error: true
+      #   uses: ./.github/actions/node18
+      #   with:
+      #     function: publish_package
+      #   env:
+      #     CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+      #     # NPMRC: ${{ secrets.NPMRC }}
+
+      # - name: Fix permissions
+      #   if: always()
+      #   run: echo "${PPP}" | sudo -S chown -R $(whoami):$(whoami) ../../.
 
 
-
-  # build:
-  #   runs-on: self-hosted
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - uses: ./.github/actions/emsdk
-  #       with:
-  #         cppfile: helloworld
-
-  #     - name: list files
-  #       shell: sh
-  #       run: |
-  #         pwd
-  #         ls -al
-
-  #     - uses: ./.github/actions/my-docker-action
-  #       with:
-  #         script: script.js
-  #       env:
-  #         MY_ENV_VAR: 'Hello World'
-  #         MY_ENV_VAR2: 'Hello World2'
-
-
-
-  # test-checkout:
-  #   runs-on: [ubuntu-latest]
-  #   container:
-  #     image: ubuntu:22.04
-  #   steps:
-
-  #     - name: test with checkout
-  #       shell: sh
-  #       run: |
-  #            pwd
-  #            ls -al
-  #            rm -rf bin .gitignore package.json package-lock.json
-
-  #     - uses: actions/checkout@v4
-  #     - name: test without checkout
-  #       shell: sh
-  #       run: |
-  #            pwd
-  #            ls -al
-
-
-  # echo-npmrc:
-  #   runs-on: [self-hosted, ubuntu]
-  #   container:
-  #     image: node:22.13.0
-  #   steps:
-  #     - name: echo npmrc
-  #       shell: bash
-  #       run: |
-  #            echo ${{ secrets.NPMRC }} > tmp.txt
-  #            cat tmp.txt	
-
-  # docker-dind-test:
-  #   runs-on: [self-hosted, ubuntu]
-  #   container:
-  #     image: docker:20.10.16
-  #   services:
-  #     docker:
-  #       image: docker:20.10.16-dind
-  #       options: --privileged
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
-  #     - name: show info
-  #       shell: sh
-  #       run: |
-  #         docker info
-
-
-  # docker-test:
-  #   runs-on: [self-hosted, ubuntu]
-  #   container:
-  #     image: node:22.13.0
-  #   steps:
-  #     - name: checkout code
-  #       uses: actions/checkout@v4
-  #     - name: show versions
-  #       shell: bash
-  #       run: |
-  #         node --version
-  #         npm --version
-
-  # build:
-  #   runs-on: [self-hosted, ubuntu]
-  #   container:
-  #     image: node:22.13.0
-  #   steps:
-  #     - name: checkout code
-  #       uses: actions/checkout@v4
-  #     - name: build and test
-  #       shell: bash
-  #       run: |
-  #            npm ci
-  #            npm run build --if-present
-  #            npm test
-
-  # publish:
-  #   runs-on: [self-hosted, ubuntu]
-  #   environment: production
-  #   container:
-  #     image: node:22.13.0
-  #   steps:
-  #     - name: checkout code
-  #       uses: actions/checkout@v4
-  #     - name: publish
-  #       shell: bash
-  #       run: |
-  #            echo ${{ secrets.NPMRC }} | base64 --decode > ~/.npmrc
-  #            cat ~/.npmrc	
-  #            npm publish
+      # # - uses: ./.github/actions/my-action
+      # #   with:
+      # #     who-to-greet: 'Alice'
