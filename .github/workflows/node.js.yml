@@ -27,12 +27,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Copy aws_login into action context if it exists
+      - name: Prepare .nmprc
         run: |
-          ls -al /aws_login
-          ls -al ./.github/actions/node18/
-          [ -f /aws_login ] && cp /aws_login ./.github/actions/node18/ || echo "aws_login not found, skipping copy"
-          ls -al ./.github/actions/node18/
+          echo -e ${{ secrets.NPMRC }} | base64 -d > ~/.npmrc
+          [ -f /aws_login ] && /aws_login || echo "aws_login not found, skipping copy"
+          cat ~/.npmrc
+          cp ~/.npmrc ./
+          cp ~/.npmrc ./.github/actions/node18/
 
       - name: Build documentation
         uses: ./.github/actions/asciidoctor

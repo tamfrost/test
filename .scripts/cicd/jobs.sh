@@ -1,13 +1,15 @@
 prepare_npmrc() {
-    if [ -n "$NPMRC" ]; then
-        echo found NPMRC environment variable
-        echo -e ${NPMRC} | base64 -d > .npmrc
-        if command -v aws >/dev/null 2>&1; then
-            echo "aws cli detected, logging in to CodeArtifact"
-            pwd
-            ./aws_login
-        fi
-    fi
+    cat .npmrc
+    cp .npmrc ~/.npmrc
+    # if [ -n "$NPMRC" ]; then
+    #     echo found NPMRC environment variable
+    #     echo -e ${NPMRC} | base64 -d > .npmrc
+    #     if command -v aws >/dev/null 2>&1; then
+    #         echo "aws cli detected, logging in to CodeArtifact"
+    #         pwd
+    #         ./aws_login
+    #     fi
+    # fi
 }
 
 build_documentation() {

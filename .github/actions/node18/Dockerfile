@@ -1,6 +1,6 @@
 FROM node:18
 
-COPY aws_login .
+COPY .npmrc .
 
 RUN echo "Setting USER 1000"
 
