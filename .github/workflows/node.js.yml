@@ -66,9 +66,8 @@ jobs:
             whoami
             id
             sudo -l
-            pwd
-            echo "p" | sudo -S chown -R $(whoami):$(whoami) .
-            echo "p" | sudo -S rm -rf _work
+            ls -al ../../.
+            echo "p" | sudo -S chown -R $(whoami):$(whoami) ../../.
 
 
       # - uses: ./.github/actions/my-action
