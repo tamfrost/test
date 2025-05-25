@@ -27,21 +27,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build documentation
-        uses: ./.github/actions/asciidoctor
-        with:
-          function: build_documentation
-        env:
-          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
-          VARIABLE1: ${{ vars.VARIABLE1 }}
-
-      # - name: Build wasm
-      #   uses: ./.github/actions/wasm
+      # - name: Build documentation
+      #   uses: ./.github/actions/asciidoctor
       #   with:
-      #     function: build_wasm
+      #     function: build_documentation
       #   env:
       #     CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
       #     VARIABLE1: ${{ vars.VARIABLE1 }}
+
+      - name: Build wasm
+        uses: ./.github/actions/wasm
+        with:
+          function: build_wasm
+        env:
+          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+          VARIABLE1: ${{ vars.VARIABLE1 }}
 
       # - name: Build package
       #   uses: ./.github/actions/node18
