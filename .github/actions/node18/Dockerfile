@@ -1,0 +1,3 @@
+FROM node:18
+
+USER 1000
