@@ -13,6 +13,7 @@ runs:
   args:
     - -c
     - |
+      pwd
       ls -al
       ls -al .scripts/cicd/jobs.sh
       source .scripts/cicd/jobs.sh
